@@ -19,7 +19,7 @@ HomeScreen As screen:
         TemplateSize: =66
         Transition: =Transition.Pop
         Y: =504
-        ZIndex: =3
+        ZIndex: =2
 
         Image1_1 As image:
             Height: =58
@@ -135,7 +135,7 @@ HomeScreen As screen:
         TemplateSize: =77
         Transition: =Transition.Pop
         Y: =175
-        ZIndex: =4
+        ZIndex: =3
 
         Image1 As image:
             Height: =65
@@ -234,16 +234,6 @@ HomeScreen As screen:
                 Y: =42
                 ZIndex: =10
 
-    Button1 As button:
-        Height: =70
-        OnSelect: =Navigate(ConfirmationScreen,ScreenTransition.Cover)
-        Size: =24
-        Text: ="Preview report"
-        Width: =280
-        X: =335
-        Y: =1041
-        ZIndex: =5
-
     Group1 As group:
         Height: =5
         Width: =5
@@ -263,7 +253,7 @@ HomeScreen As screen:
             Width: =560
             X: =47
             Y: =646
-            ZIndex: =6
+            ZIndex: =4
 
         Icon1 As icon.Search:
             Color: =RGBA(149, 149, 149, 1)
@@ -273,52 +263,14 @@ HomeScreen As screen:
             Visible: =IsEmpty(Tools_Gallery.AllItems)
             X: =295
             Y: =587
-            ZIndex: =7
+            ZIndex: =5
 
     Rectangle1_3 As rectangle:
         BorderColor: =RGBA(149, 149, 149, 1)
         BorderThickness: =1
         Height: =68
         Width: =640
-        ZIndex: =12
-
-    Group3 As group:
-        Height: =5
-        Width: =5
-        X: =60
-        Y: =60
-        ZIndex: =12
-
-        Rectangle1_2 As rectangle:
-            Height: =94
-            Width: =640
-            Y: =67
-            ZIndex: =1
-
-        Label3 As label:
-            Color: =RGBA(255, 255, 255, 1)
-            FontWeight: =FontWeight.Lighter
-            Height: =33
-            Size: =18
-            Text: =LookUp(Test_Departments, ID = CB_dep.Selected.ID , 'Department Abbreviation')
-            Width: =89
-            X: =40
-            Y: =127
-            ZIndex: =10
-
-        Label3_1 As label:
-            Color: =RGBA(255, 255, 255, 1)
-            FontWeight: =FontWeight.Lighter
-            Height: =33
-            Size: =18
-            Text: |-
-                ="Responsible: " & LookUp(Test_Departments, ID = CB_dep.Selected.ID , 'Department Responsible').DisplayName
-            Visible: |
-                =CountRows(CB_dep.SelectedItems) >0
-            Width: =464
-            X: =151
-            Y: =127
-            ZIndex: =11
+        ZIndex: =10
 
     Icon2_2 As icon.BackArrow:
         Color: =RGBA(255, 255, 255, 1)
@@ -336,7 +288,7 @@ HomeScreen As screen:
         Width: =55
         X: =570
         Y: =5
-        ZIndex: =13
+        ZIndex: =11
 
     Icon2_3 As icon.BackArrow:
         Color: |-
@@ -355,7 +307,46 @@ HomeScreen As screen:
         Width: =55
         X: =494
         Y: =6
-        ZIndex: =14
+        ZIndex: =12
+
+    Group3 As group:
+        Height: =5
+        Width: =5
+        X: =60
+        Y: =60
+        ZIndex: =12
+
+        Rectangle1_2 As rectangle:
+            Fill: =RGBA(128, 128, 128, 1)
+            Height: =94
+            Width: =640
+            Y: =67
+            ZIndex: =1
+
+        Label3 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Lighter
+            Height: =33
+            Size: =18
+            Text: =LookUp(Test_Departments, ID = CB_dep.Selected.ID , 'Department Abbreviation')
+            Width: =89
+            X: =40
+            Y: =127
+            ZIndex: =8
+
+        Label3_1 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Lighter
+            Height: =33
+            Size: =18
+            Text: |-
+                ="Responsible: " & LookUp(Test_Departments, ID = CB_dep.Selected.ID , 'Department Responsible').DisplayName
+            Visible: |
+                =CountRows(CB_dep.SelectedItems) >0
+            Width: =464
+            X: =151
+            Y: =127
+            ZIndex: =9
 
     Icon2_4 As icon.BackArrow:
         Color: |-
@@ -374,7 +365,30 @@ HomeScreen As screen:
         Width: =55
         X: =11
         Y: =6
-        ZIndex: =18
+        ZIndex: =15
+
+    CB_dep As combobox:
+        DisplayFields: =["Title"]
+        Height: =54
+        IsSearchable: =false
+        Items: =Test_Departments
+        OnSelect: |
+            =Clear(MissingHere);
+            
+                ForAll(Tools_Gallery.AllItems,
+                    If(Checkbox2.Value=false,
+                        //newMissing & "_" & ThisRecord.Value;
+                        Collect(MissingHere,ThisRecord)
+                    )    
+                );
+        SearchFields: =["DepartmentAbbreviation"]
+        SearchItems: =[]
+        SelectMultiple: =false
+        Size: =21
+        Width: =575
+        X: =39
+        Y: =73
+        ZIndex: =16
 
     InfoGroup01 As group:
         Height: =5
@@ -392,7 +406,7 @@ HomeScreen As screen:
             Width: =25
             X: =134
             Y: =373
-            ZIndex: =16
+            ZIndex: =13
 
         Label6 As label:
             Color: =HotPink
@@ -403,27 +417,31 @@ HomeScreen As screen:
             Width: =374
             X: =165
             Y: =349
-            ZIndex: =17
-
-    CB_dep As combobox:
-        DisplayFields: =["Title"]
-        Height: =54
-        IsSearchable: =false
-        Items: =Test_Departments
-        SearchFields: =["DepartmentAbbreviation"]
-        SearchItems: =[]
-        SelectMultiple: =false
-        Size: =21
-        Width: =575
-        X: =39
-        Y: =73
-        ZIndex: =19
+            ZIndex: =14
 
     Rectangle1_6 As rectangle:
+        Fill: =RGBA(128, 128, 128, 1)
         Height: =31
         Width: =640
         Y: =473
-        ZIndex: =22
+        ZIndex: =19
+
+    Rectangle1_7 As rectangle:
+        Fill: =RGBA(128, 128, 128, 1)
+        Height: =114
+        Width: =640
+        Y: =1022
+        ZIndex: =20
+
+    ButPrevReport As button:
+        Height: =70
+        OnSelect: =Navigate(ConfirmationScreen,ScreenTransition.Cover)
+        Size: =24
+        Text: ="Preview report"
+        Width: =280
+        X: =335
+        Y: =1041
+        ZIndex: =21
 
     Group1_3 As group:
         Height: =5
@@ -444,7 +462,7 @@ HomeScreen As screen:
             Width: =560
             X: =39
             Y: =358
-            ZIndex: =20
+            ZIndex: =17
 
         Icon1_3 As icon.Search:
             Color: =RGBA(149, 149, 149, 1)
@@ -454,7 +472,7 @@ HomeScreen As screen:
             Visible: =IsEmpty(WS_Gallery.AllItems)
             X: =287
             Y: =299
-            ZIndex: =21
+            ZIndex: =18
 
     Group6 As group:
         Height: =5
@@ -482,7 +500,7 @@ HomeScreen As screen:
             Width: =640
             X: =0
             Y: =872
-            ZIndex: =8
+            ZIndex: =6
 
             Title_Column2 As dataTableColumn.textualColumn:
                 DisplayMode: =DisplayMode.Edit
@@ -520,5 +538,5 @@ HomeScreen As screen:
             Visible: =false
             Width: =560
             Y: =817
-            ZIndex: =9
+            ZIndex: =7
 
