@@ -1,0 +1,58 @@
+{
+  "8273b403-523c-4c85-bb3e-165eecdf308c": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 Users",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1573/1.0.1573.2770/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Users"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "8273b403-523c-4c85-bb3e-165eecdf308c"
+  },
+  "ef9fb4bf-a520-4b65-a0dd-5f2789636ade": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1578/1.0.1578.2813/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://prodrivetechnologies.sharepoint.com/sites/MachiningProcess": {
+        "dataSources": {
+          "Test_Departments": {
+            "tableName": "8181f770-ed45-4c67-9121-14f7dcc9c300"
+          },
+          "Test_Tools": {
+            "tableName": "c9ff0b35-1103-4a57-9133-2bed45308cb8"
+          },
+          "Test_Workstations": {
+            "tableName": "b9fb5eaf-a9c0-4535-86b7-023378a33e37"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "Test_Departments",
+      "Test_Tools",
+      "Test_Workstations"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "ef9fb4bf-a520-4b65-a0dd-5f2789636ade"
+  }
+}

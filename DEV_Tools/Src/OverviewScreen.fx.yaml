@@ -1,0 +1,313 @@
+OverviewScreen As screen:
+
+    Button1_2 As button:
+        Height: =70
+        OnSelect: |-
+            =
+            Clear(MissingHere);
+            
+                ForAll(Tools_Gallery.AllItems,
+                    If(Checkbox2.Value=false,
+                        //newMissing & "_" & ThisRecord.Value;
+                        Collect(MissingHere,ThisRecord)
+                    )    
+                );
+            //Send the updated info to sharepoint: 
+            Patch(Test_Workstations,LookUp(Test_Workstations,ID=WS_Gallery.Selected.ID),{CurrentlyMissing:MissingHere});
+            Back(ScreenTransition.Fade)
+        Size: =24
+        Text: ="Send report"
+        Width: =280
+        X: =335
+        Y: =1048
+        ZIndex: =4
+
+    Group1_2 As group:
+        Height: =5
+        Width: =5
+        X: =60
+        Y: =60
+        ZIndex: =8
+
+        "'Select a WS first Label_2' As label":
+            Align: =Align.Center
+            Color: =RGBA(149, 149, 149, 1)
+            Height: =70
+            Size: =21
+            Text: ="- No results found - "
+            Visible: =IsEmpty(Tools_Gallery.AllItems)
+            Width: =560
+            X: =40
+            Y: =812
+            ZIndex: =5
+
+        Icon1_2 As icon.Search:
+            Color: =RGBA(149, 149, 149, 1)
+            DisplayMode: =DisplayMode.View
+            Height: =59
+            Icon: =Icon.Error
+            Visible: =IsEmpty(Tools_Gallery.AllItems)
+            X: =288
+            Y: =753
+            ZIndex: =6
+
+    Rectangle1_5 As rectangle:
+        Height: =80
+        Width: =640
+        ZIndex: =10
+
+    Icon2_5 As icon.BackArrow:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =58
+        Icon: =Icon.BackArrow
+        OnSelect: =Back(ScreenTransition.UnCoverRight)
+        X: =8
+        Y: =9
+        ZIndex: =11
+
+    Image2_1 As image:
+        Height: =180
+        Image: =WS_Gallery.Selected.'Workstation Image'
+        Width: =180
+        X: =8
+        Y: =86
+        ZIndex: =13
+
+    Label1_10 As label:
+        Height: =48
+        Size: =21
+        Text: =WS_Gallery.Selected.WorkstationName
+        Width: =156
+        X: =347
+        Y: =107
+        ZIndex: =14
+
+    Label1_11 As label:
+        Height: =48
+        Size: =21
+        Text: =WS_Gallery.Selected.'Workstation Departments'.Value
+        Width: =156
+        X: =347
+        Y: =152
+        ZIndex: =15
+
+    Label1_12 As label:
+        Height: =48
+        Size: =21
+        Text: =CountRows(MissingHere) & " (" & CountRows((Filter(Test_Tools, ID in WS_Gallery.Selected.CurrentlyMissing.Id))) &") "
+        Width: =156
+        X: =347
+        Y: =200
+        ZIndex: =16
+
+    Label1_13 As label:
+        Align: =Align.Right
+        Color: =RGBA(166, 166, 166, 1)
+        Height: =48
+        Size: =16
+        Text: |-
+            ="Workstation:"
+        Width: =157
+        X: =190
+        Y: =107
+        ZIndex: =17
+
+    Label1_14 As label:
+        Align: =Align.Right
+        Color: =RGBA(166, 166, 166, 1)
+        Height: =48
+        Size: =16
+        Text: |-
+            ="Department:"
+        Width: =157
+        X: =190
+        Y: =152
+        ZIndex: =18
+
+    Label1_15 As label:
+        Align: =Align.Right
+        Color: =RGBA(166, 166, 166, 1)
+        Height: =48
+        Size: =16
+        Text: |-
+            ="Total missing:"
+        Width: =157
+        X: =190
+        Y: =200
+        ZIndex: =19
+
+    Icon2_6 As icon.BackArrow:
+        Color: |-
+            =Switch(CountRows(MissingHere),
+                0, YellowGreen,
+                1, Orange,
+                
+                DarkRed
+            )
+        Height: =Self.Width
+        Icon: |-
+            =Switch(CountRows(MissingHere),
+                0, Icon.EmojiSmile,
+                1, Icon.EmojiNeutral,
+                
+                Icon.EmojiFrown
+            )
+        Width: =131
+        X: =484
+        Y: =110
+        ZIndex: =20
+
+    "OverviewGallery As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+        BorderColor: =RGBA(166, 166, 166, 1)
+        BorderThickness: =2
+        Height: =237
+        Items: =(First(Test_Workstations.CurrentlyMissing).CurrentlyMissing.Value
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        TemplatePadding: =0
+        TemplateSize: =53
+        Transition: =Transition.Pop
+        Y: =301
+        ZIndex: =21
+
+        Image1_3 As image:
+            Height: =41
+            Image: =
+            OnSelect: =Select(Parent)
+            Width: =80
+            X: =17
+            Y: =3
+            ZIndex: =1
+
+        Title1_3 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =14
+            Text: =ThisItem
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth - Image1_3.Width - 104
+            X: =Image1_3.X + Image1_3.Width + 24
+            Y: =14
+            ZIndex: =2
+
+        Subtitle1_3 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =14
+            Text: =
+            VerticalAlign: =VerticalAlign.Top
+            Width: =167
+            X: =308
+            Y: =12
+            ZIndex: =3
+
+        Separator1_3 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =5
+
+        Label5_2 As label:
+            Color: =RGBA(255, 0, 0, 1)
+            Height: =39
+            OnSelect: =Select(Parent)
+            Size: =12
+            Text: =
+            Width: =62
+            X: =475
+            Y: =5
+            ZIndex: =7
+
+    Rectangle1_4 As rectangle:
+        Height: =30
+        Width: =640
+        Y: =266
+        ZIndex: =22
+
+    Label7 As label:
+        Fill: =RGBA(255, 0, 0, 1)
+        Height: =70
+        Size: =21
+        Text: =(First(Test_Workstations.CurrentlyMissing).CurrentlyMissing).Value
+        Width: =560
+        X: =55
+        Y: =609
+        ZIndex: =23
+
+    "Gallery1 As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+        Height: =196
+        Items: =(Test_Workstations.CurrentlyMissing).CurrentlyMissing.Result
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =Min(160, Self.Height - 60)
+        Y: =749
+        ZIndex: =24
+
+        Image3 As image:
+            Height: =128
+            OnSelect: =Select(Parent)
+            Width: =128
+            X: =16
+            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            ZIndex: =1
+
+        Title2 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Value
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth - Image3.Width - 104
+            X: =Image3.X + Image3.Width + 24
+            Y: =44
+            ZIndex: =2
+
+        Subtitle1 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Value
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Title2.Width
+            X: =Title2.X
+            Y: =Title2.Y + Title2.Height + 4
+            ZIndex: =3
+
+        NextArrow2 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            Height: =60
+            Icon: =Icon.ChevronRight
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            TabIndex: =0
+            Tooltip: ="View item details"
+            Width: =60
+            X: =Parent.TemplateWidth - Self.Width - 5
+            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            ZIndex: =4
+
+        Separator2 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =5
+
