@@ -219,7 +219,7 @@ HomeScreen As screen:
             Label1_8 As label:
                 Height: =27
                 Size: =18
-                Text: =CountRows(WS_Gallery.Selected.WorkstationTools)
+                Text: =CountRows(ThisItem.WorkstationTools)
                 Width: =40
                 X: =480
                 Y: =10
